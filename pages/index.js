@@ -5,14 +5,13 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import PropertyCard from "../components/PropertyCard";
 import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
 import Map from "../components/Map";
 import MapSection from "../components/MapSection";
 import Image from "next/image";
 import HotDeal from "../components/HotDeal";
-import HotDealMultiple from "../components/HotDealMultiple"
-import DealMascot from "../components/DealMascot"
+import HotDealMultiple from "../components/HotDealMultiple";
+import DealMascot from "../components/DealMascot";
+import PropertySliderClient from "../components/PropertySliderClient";
 
 // List of images in public/images folder
 const images = [
@@ -21,50 +20,6 @@ const images = [
   "/images/hero3.png",
   // Add more images here
 ];
-
-function NextArrow({ onClick }) {
-  return (
-    <div
-      className="absolute top-1/2 right-[-20px] z-20 -translate-y-1/2 cursor-pointer p-2 bg-yellow-500 rounded-full hover:bg-yellow-600 transition"
-      onClick={onClick}
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        className="h-6 w-6 text-white"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-        strokeWidth={2}
-      >
-        <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-      </svg>
-    </div>
-  );
-}
-
-function PrevArrow({ onClick }) {
-  return (
-    <div
-      className="absolute top-1/2 left-[-20px] z-20 -translate-y-1/2 cursor-pointer p-2 bg-yellow-500 rounded-full hover:bg-yellow-600 transition"
-      onClick={onClick}
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        className="h-6 w-6 text-white"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-        strokeWidth={2}
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          d="M15 19l-7-7 7-7"
-        />
-      </svg>
-    </div>
-  );
-}
 
 export default function Home() {
   const [current, setCurrent] = useState(0);
@@ -82,22 +37,7 @@ export default function Home() {
     return () => clearInterval(interval);
   }, []);
 
-  const sliderSettings = {
-    dots: true,
-    infinite: true,
-    speed: 800,
-    slidesToShow: 3,
-    slidesToScroll: 1,
-    autoplay: true,
-    autoplaySpeed: 4000,
-    arrows: true,
-    nextArrow: <NextArrow />,
-    prevArrow: <PrevArrow />,
-    responsive: [
-      { breakpoint: 1024, settings: { slidesToShow: 2 } },
-      { breakpoint: 640, settings: { slidesToShow: 1, arrows: false } },
-    ],
-  };
+ 
 
   return (
     <div>
@@ -151,7 +91,7 @@ export default function Home() {
                 Search Properties
               </Link>
               <a
-                href="tel:+911234567890"
+                href="tel:+919893316916"
                 className="px-6 py-3 bg-gray-800 rounded"
               >
                 Call Now
@@ -164,16 +104,10 @@ export default function Home() {
           <h2 className="text-2xl font-semibold mb-6 text-center">
             Explore Featured Properties
           </h2>
-          {properties.length === 0 ? (
-            <p className="text-center text-gray-500">Loading properties...</p>
+          {properties.length ? (
+            <PropertySliderClient properties={properties} />
           ) : (
-            <Slider {...sliderSettings}>
-              {properties.map((p) => (
-                <div key={p.id} className="px-2">
-                  <PropertyCard p={p} />
-                </div>
-              ))}
-            </Slider>
+            <p>Loading properties...</p>
           )}
         </section>
       </main>
